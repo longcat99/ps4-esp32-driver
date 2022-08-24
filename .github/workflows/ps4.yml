@@ -1,0 +1,23 @@
+name: Test
+on:
+  push
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Build
+        uses: batov/esp32_qemu_runner@v4.4
+      - name: Publish Unit Test Results
+        uses: longcat99/publish-unit-test-result-action@v2
+        if: always()
+        with:
+            files: report.xml
+      - name: Zip binaries
+        run: zip --junk-paths binaries mqtt_tcp.bin build/bootloader/bootloader.bin build/partition_table/partition-table.bin 
+      - name: Prepare artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path: binaries.zip
