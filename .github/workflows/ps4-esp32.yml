@@ -32,7 +32,7 @@ jobs:
       with:
         esp_idf_version: v4.4
         target: esp32
-        path: '/'
+        path: 'examples/led'
     - name: 查看目录
       run:
           ls
